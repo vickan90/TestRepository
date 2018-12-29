@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>画布</title>
+		<style></style>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			html,
+			body {
+				height: 100%;
+				background: pink;
+			}
+			
+			canvas {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+				background-color: white;
+				opacity: .8;
+			}
+		</style>
+	</head>
+
+	<body>
+		<canvas></canvas>
+	</body>
+	<script>
+		window.onload = function() {
+			var canvas = document.querySelector("canvas");
+			canvas.width = 200;
+			canvas.height = 500;
+			console.log(canvas.width + ":" + canvas.height);
+			//获取绘图对象
+			var ctx = canvas.getContext("2d");
+			//定义一个圆形符合参数的数组
+			var cycArr = [];
+			//变换绘制的参数
+			//绘制圆形
+			setInterval(function() {
+				//清理上一次的痕迹
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				for(var i = 0; i < cycArr.length; i++) {
+					cycArr[i].step += 5;
+					//修改原圆形的参数实现位移变化
+					cycArr[i].x = cycArr[i].startX + Math.sin(cycArr[i].step * Math.PI / 180) * cycArr[i].n;
+					cycArr[i].y = cycArr[i].startY - cycArr[i].step;
+					if(cycArr[i].y<=0){
+						cycArr.splice(i,1);
+						continue;
+					}
+					//画圆
+					//进行新的绘制
+					ctx.beginPath();
+					//设置填充
+					ctx.fillStyle = "rgba(" + cycArr[i].rgba.r + "," + cycArr[i].rgba.g + "," + cycArr[i].rgba.b + "," + cycArr[i].rgba.a + ")";
+					//绘制圆形
+					ctx.arc(cycArr[i].x, cycArr[i].y, cycArr[i].r, 0, 2 * Math.PI);
+					//绘制
+					ctx.fill();
+				}
+			}, 1000 / 60);
+
+//			源源不断产生新的圆
+			setInterval(function() {
+				console.log(cycArr);
+				var sX=Math.random() * canvas.width;
+				//造圆
+				var cycle = {
+					x: sX,
+					y: canvas.height,
+					r: Math.random() * 10,
+					n:100,
+					startX:sX,
+					startY:canvas.height,
+					step:Math.random()*5,
+					rgba: {
+						r: Math.random() * 255,
+						g: Math.random() * 255,
+						b: Math.random() * 255,
+						a: Math.random()
+					}
+				}
+				//加入到数组
+				cycArr.push(cycle);
+			}, 1000/60);
+		}
+	</script>
+
+</html>

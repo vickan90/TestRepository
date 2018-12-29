@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			html,
+			body {
+				height: 100%;
+			}
+			
+			#cube {
+				position: absolute;
+				top: 90%;
+				left: 50%;
+				width: 10px;
+				height: 10px;
+				background-color: black;
+			}
+			/*点*/
+			
+			.pointer {
+				position: absolute;
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="cube"></div>
+	</body>
+	<script>
+		window.onload = function() {
+			var cube = document.querySelector("#cube");
+			//获取初始位置
+			var x = cube.offsetLeft;
+			var y = cube.offsetTop;
+			//定义一个横向上的速度
+			var step= 0;
+			//偏振度
+			var n = 100;
+			setInterval(function() {
+				step += 1;
+				cube.style.left = x + Math.sin(step * Math.PI / 180) * n + 'px';
+				cube.style.top = y - step + 'px';
+				//在路径上铺设轨迹
+				var pointer = document.createElement("div");
+				pointer.className = 'pointer';
+				pointer.style.left = cube.style.left;
+				pointer.style.top = cube.style.top;
+				//放到页面上
+				document.body.appendChild(pointer);
+			}, 1000 / 60);
+		}
+	</script>
+
+</html>

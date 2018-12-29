@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>开机动画</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				height: 100%;
+			}
+			
+			.content {
+				height: 100%;
+				background-color: burlywood;
+				text-align: center;
+			}
+			
+			.content>span {
+				position: relative;
+				top: -100px;
+				color: red;
+				font: bold 60px "微软雅黑";
+				transition: top 1s;
+			}
+			
+			.door {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				z-index: 1;
+			}
+			
+			.door>.up {
+				position: absolute;
+				height: 50%;
+				width: 100%;
+				background-color: cadetblue;
+				transition: height 1.5s;
+			}
+			
+			.door>.down {
+				position: absolute;
+				height: 50%;
+				width: 100%;
+				bottom: 0;
+				background-color: cadetblue;
+				transition: height 1.5s;
+			}
+			
+			.door>.line {
+				position: absolute;
+				height: 5px;
+				width: 0;
+				top: 49.7%;
+				background-color: white;
+				transition: width 1s;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="door">
+			<div class="up"></div>
+			<div class="down"></div>
+			<span class="line"></span>
+		</div>
+		<div class="content">
+			<span>开门红</span>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+		window.onload = function() {
+			var door = document.querySelector(".door");
+			var up = document.querySelector(".door>.up");
+			var down = document.querySelector(".door>.down");
+			var line = document.querySelector(".door>.line");
+			var span =document.querySelector(".content>span");
+			line.style.width = "100%";
+			line.addEventListener("transitionend", function() {
+				this.style.display = 'none';
+				up.style.height = 0;
+				down.style.height = 0;
+			});
+			up.addEventListener("transitionend", function() {
+				door.remove();
+				span.style.top='280px';
+			});
+		}
+	</script>
+
+</html>
